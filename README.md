@@ -63,6 +63,7 @@ On first launch, create an admin account in Jellyfin.
         └── series/
 ```
 
+
 ## Notes
 - The container is set to restart automatically with --restart=unless-stopped.
 - By default, the server is only accessible in the local network.
