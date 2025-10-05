@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Vault Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔐 Password Vault Manager</h1>
+            <p>Secure password management for your home lab</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="search-bar">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search passwords...">
+            </div>
+            
+            <div class="button-group">
+                <div class="file-input-wrapper">
+                    <label for="fileInput" class="btn btn-primary">
+                        📁 Upload CSV
+                    </label>
+                    <input type="file" id="fileInput" accept=".csv">
+                </div>
+                
+                <button class="btn btn-success" onclick="showLogs()">
+                    📋 View Logs
+                </button>
+                
+                <button class="btn btn-warning" onclick="exportData()">
+                    💾 Export Data
+                </button>
+                
+                <button class="btn btn-danger" onclick="clearData()">
+                    🗑️ Clear All
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stats-item">
+                <div class="stats-value" id="totalEntries">0</div>
+                <div class="stats-label">Total Entries</div>
+            </div>
+            <div class="stats-item">
+                <div class="stats-value" id="displayedEntries">0</div>
+                <div class="stats-label">Displayed</div>
+            </div>
+            <div class="stats-item">
+                <div class="stats-value" id="columnsCount">0</div>
+                <div class="stats-label">Columns</div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <div id="noData" class="no-data">
+                <div class="no-data-icon">📂</div>
+                <h3>No Data Yet</h3>
+                <p>Upload a CSV file to get started</p>
+            </div>
+            <div id="tableWrapper" style="display: none;">
+                <table id="passwordTable">
+                    <thead id="tableHead"></thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logs Modal -->
+    <div id="logsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📋 System Logs</h2>
+                <span class="close" onclick="closeLogs()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="logsContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="exportLogs()">💾 Export Logs</button>
+                <button class="btn btn-danger" onclick="closeLogs()">✖ Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
