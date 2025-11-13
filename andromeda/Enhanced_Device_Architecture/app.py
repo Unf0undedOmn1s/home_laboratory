@@ -7,8 +7,8 @@ from core.alert_manager import get_alerts
 from core.alert_bot import send_telegram_alert
 
 # User credentials
-USERNAME = "andromeda"
-PASSWORD = "trobomalakas02"
+USERNAME = "<USERNAME>"
+PASSWORD = "<PASSWORD>"
 
 
 app = Flask(__name__)
