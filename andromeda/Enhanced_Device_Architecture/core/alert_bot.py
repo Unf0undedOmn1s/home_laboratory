@@ -2,8 +2,8 @@ import requests
 from datetime import datetime
 
 # Telegram Bot Token and Chat ID
-TELEGRAM_BOT_TOKEN = "8114768006:AAGyfXKLStVjIoyp02S0iGGgpdUvbwhdbjw"
-TELEGRAM_CHAT_ID = "2088133257"  # Chat ID
+TELEGRAM_BOT_TOKEN = "TELEGRAM_BOT_TOKEN"
+TELEGRAM_CHAT_ID = "TELEGRAM_CHAT_ID"  # Chat ID
 
 def send_telegram_alert(message: str, level: str = "info"):
     """
