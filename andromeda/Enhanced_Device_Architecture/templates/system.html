@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Andromeda Server Statistics</h2>
+<div id="stats">
+  <p>CPU: <span id="cpu">--</span>%</p>
+  <p>Memory: <span id="mem">--</span>%</p>
+  <p>Disk: <span id="disk">--</span>%</p>
+  <p>Uptime: <span id="uptime">--</span></p>
+</div>
+<script>
+  async function refresh() {
+    let r = await fetch('/system/data');
+    let d = await r.json();
+    cpu.textContent = d.cpu;
+    mem.textContent = d.memory;
+    disk.textContent = d.disk;
+    uptime.textContent = d.uptime;
+  }
+  setInterval(refresh, 3000);
+  refresh();
+</script>
+{% endblock %}

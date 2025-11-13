@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Important Alerts</h1>
+<div class="card">
+  {% for a in alerts %}
+    <p>{{ a.timestamp }} - {{ a.message }}</p>
+  {% else %}
+    <p>No alerts at the moment</p>
+  {% endfor %}
+</div>
+{% endblock %}

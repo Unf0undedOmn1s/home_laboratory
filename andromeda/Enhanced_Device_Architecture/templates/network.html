@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Network Devices</h1>
+<div class="card">
+  <table>
+    <tr><th>IP Address</th><th>MAC Address</th><th>Hostname</th></tr>
+    {% for d in devices %}
+    <tr>
+      <td>{{ d.ip }}</td>
+      <td>{{ d.mac }}</td>
+      <td>{{ d.hostname }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

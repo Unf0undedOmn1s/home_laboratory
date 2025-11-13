@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Login — Andromeda</title>
+  <style>
+    body{font-family:Inter, Arial, sans-serif;background:#0d1117;color:#c9d1d9;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+    
+    .box{background:#121826;padding:28px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.6);width:320px}
+
+    h1{color:#58a6ff;margin:0 0 14px;font-size:20px}
+
+    input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #30363d;background:#0f1720;color:#c9d1d9}
+
+    button{width:100%;padding:10px;border-radius:8px;border:none;background:#58a6ff;color:#041025;font-weight:600;cursor:pointer}
+
+    .error{color:#ff8080;margin-top:8px;font-size:0.9rem}
+
+    .small{font-size:0.85rem;color:#8b949e;margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Andromeda Server Management Login</h1>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="post" action="{{ url_for('login') }}">
+      <input name="username" placeholder="Username" required autofocus />
+      <input name="password" type="password" placeholder="Password" required />
+      <button type="submit">Sign in</button>
+    </form>
+    <div class="small">Sign in to access the dashboard</div>
+  </div>
+</body>
+</html>

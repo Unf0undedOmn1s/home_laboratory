@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Network Packet Analyzer</h1>
+<div class="card">
+  <table>
+    <tr><th>Source</th><th>Destination</th><th>Protocol</th></tr>
+    {% for p in packets %}
+    <tr>
+      <td>{{ p.src }}</td>
+      <td>{{ p.dst }}</td>
+      <td>{{ p.proto }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

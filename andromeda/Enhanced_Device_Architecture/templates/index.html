@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Home Dashboard</h1>
+<div class="card">
+  <p>Welcome to the <b>Andromeda Home Lab Dashboard</b>.</p>
+  <p>Use the sidebar to navigate through live system, network, packet, alert, and power metrics.</p>
+</div>
+
+<div class="card" style="text-align:center;">
+  <h2>Telegram Alerts</h2>
+  <p>Press the button below to send a test notification to your phone.</p>
+  <button id="testAlertBtn" class="theme-toggle" style="padding:10px 20px; font-size:16px;">Send Test Alert</button>
+  <p id="alertStatus" style="margin-top:10px; color: var(--muted);"></p>
+</div>
+
+<script>
+document.getElementById("testAlertBtn").addEventListener("click", async () => {
+  document.getElementById("alertStatus").textContent = "Sending...";
+  try {
+    const res = await fetch("/api/test_alert", { method: "POST" });
+    const data = await res.json();
+    if (data.status === "success") {
+      document.getElementById("alertStatus").textContent = "✅ Alert sent to Telegram!";
+    } else {
+      document.getElementById("alertStatus").textContent = "⚠️ " + data.message;
+    }
+  } catch (err) {
+    document.getElementById("alertStatus").textContent = "❌ Failed to send alert.";
+    console.error(err);
+  }
+});
+</script>
+
+{% endblock %}

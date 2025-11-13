@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title or 'Andromeda Dashboard' }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* 🌗 Theme Variables */
+    :root {
+      --bg: #0b0e16;
+      --panel: rgba(20, 25, 40, 0.8);
+      --accent: #58a6ff;
+      --glow: 0 0 25px rgba(88,166,255,0.4);
+      --text: #c9d1d9;
+      --muted: #7d8590;
+      --blur: blur(15px);
+    }
+
+    [data-theme="light"] {
+      --bg: #f8f9fb;
+      --panel: rgba(255,255,255,0.8);
+      --accent: #007bff;
+      --glow: 0 0 10px rgba(0,123,255,0.3);
+      --text: #212529;
+      --muted: #6c757d;
+      --blur: blur(10px);
+    }
+
+    [data-theme="neon"] {
+      --bg: #040008;
+      --panel: rgba(20, 0, 40, 0.8);
+      --accent: #ff00ff;
+      --glow: 0 0 25px rgba(255,0,255,0.7);
+      --text: #f0dfff;
+      --muted: #a78bfa;
+      --blur: blur(20px);
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: background 0.5s, color 0.5s;
+      overflow-x: hidden;
+    }
+
+    /* Splash Screen */
+    #splash {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, var(--bg) 0%, #050810 100%);
+      color: var(--accent);
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      z-index: 1000;
+      animation: fadeOut 1.5s ease forwards;
+      animation-delay: 2s;
+    }
+
+    .loading-bar {
+      width: 180px;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 15px;
+      box-shadow: var(--glow);
+    }
+
+    .loading-bar span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      animation: load 2s ease-in-out forwards;
+    }
+
+    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+    @keyframes load { to { width: 100%; } }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: var(--blur);
+      background: var(--panel);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      z-index: 20;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    header h2 {
+      color: var(--accent);
+      text-shadow: var(--glow);
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    .status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .status span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-left: 15px;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      color: var(--bg);
+      box-shadow: var(--glow);
+    }
+
+    /* Sidebar Nav */
+    nav {
+      width: 220px;
+      background: var(--panel);
+      backdrop-filter: var(--blur);
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    nav h3 {
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 10px;
+      border-radius: 8px;
+      transition: background 0.2s, padding-left 0.2s;
+    }
+
+    nav a:hover {
+      background: rgba(88,166,255,0.1);
+      padding-left: 15px;
+    }
+
+    /* Mobile hamburger */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--accent);
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .main-wrapper {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      animation: fadeIn 1s ease;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: var(--glow);
+      margin-bottom: 20px;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px var(--accent);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 850px) {
+      .main-wrapper { flex-direction: column; }
+      nav {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        height: calc(100vh - 60px);
+        transform: translateX(-100%);
+        width: 200px;
+        z-index: 100;
+      }
+      nav.active { transform: translateX(0); }
+      .menu-toggle { display: block; }
+      main { padding: 15px; }
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 10px;
+      color: var(--muted);
+      background: var(--panel);
+      backdrop-filter: var(--blur);
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <!-- Splash -->
+  <div id="splash">
+    <div>Initializing Andromeda Server...</div>
+    <div class="loading-bar"><span></span></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div style="display:flex; align-items:center;">
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      <h2>Andromeda</h2>
+    </div>
+    <div style="display:flex; align-items:center;">
+      <div class="status">
+        <div>CPU: <span id="cpu">--</span>%</div>
+        <div>Temp: <span id="temp">--</span>°C</div>
+        <div>Power: <span id="power">--</span>W</div>
+        <div>Uptime: <span id="uptime">--</span></div>
+      </div>
+      <button class="theme-toggle" onclick="cycleTheme()">🌓</button>
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+    <nav id="sidebar">
+      <h3>Navigation</h3>
+      <a href="/">Dashboard</a>
+      <a href="/system">System</a>
+      <a href="/network">Network</a>
+      <a href="/packets">Packets</a>
+      <a href="/alerts">Alerts</a>
+      <a href="/power_monitor">Power</a>
+    </nav>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <footer>© 2025 Andromeda Systems | Secured via Tailscale</footer>
+
+  <script>
+    // Splash Screen Removal
+    setTimeout(() => {
+      document.getElementById("splash").style.display = "none";
+      document.body.style.overflow = "auto";
+    }, 2500);
+
+    // Sidebar Toggle
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    // Theme Switcher
+    const themes = ["dark", "light", "neon"];
+    function cycleTheme() {
+      const current = document.body.getAttribute("data-theme") || "dark";
+      const index = themes.indexOf(current);
+      const next = themes[(index + 1) % themes.length];
+      document.body.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    }
+    const saved = localStorage.getItem("theme");
+    if (saved) document.body.setAttribute("data-theme", saved);
+
+    // Status Bar Updates
+    async function updateStatusBar() {
+      try {
+        const sys = await fetch("/system/data").then(r=>r.json());
+        const pow = await fetch("/power").then(r=>r.json());
+        document.getElementById("cpu").innerText = sys.cpu ?? "--";
+        document.getElementById("uptime").innerText = sys.uptime ?? "--";
+        document.getElementById("temp").innerText = pow.cpu_temp ?? "--";
+        document.getElementById("power").innerText = pow.power ?? "--";
+      } catch(e) { console.error(e); }
+    }
+    updateStatusBar();
+    setInterval(updateStatusBar, 5000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Power Monitor</h1>
+
+<div id="card" class="card">
+  <div>Power: <span id="power">Loading...</span> W</div>
+  <div>Voltage: <span id="voltage">Loading...</span> V</div>
+  <div>Current: <span id="current">Loading...</span> A</div>
+  <div>CPU Temp: <span id="temp">Loading...</span> °C</div>
+  <div>Source: <span id="source">Loading...</span></div>
+</div>
+
+<div class="chart-box">
+  <canvas id="powerChart"></canvas>
+</div>
+
+<script>
+  const powerData = [];
+  const timeLabels = [];
+  const ctx = document.getElementById('powerChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: timeLabels, datasets: [{ label: 'Power (W)', data: powerData, borderColor: '#58a6ff', tension: 0.3 }] },
+    options: { scales: { x: { ticks: { color: '#c9d1d9' }}, y: { ticks: { color: '#c9d1d9' }}}}
+  });
+
+  async function updatePower() {
+    const res = await fetch('/power');
+    const data = await res.json();
+    document.getElementById('power').innerText = data.power;
+    document.getElementById('voltage').innerText = data.voltage;
+    document.getElementById('current').innerText = data.current;
+    document.getElementById('temp').innerText = data.cpu_temp || 'N/A';
+    document.getElementById('source').innerText = data.source;
+
+    const now = new Date().toLocaleTimeString();
+    timeLabels.push(now);
+    powerData.push(data.power);
+    if (timeLabels.length > 20) { timeLabels.shift(); powerData.shift(); }
+    chart.update();
+
+    const card = document.getElementById('card');
+    if (data.power > 80) card.classList.add('alert'); else card.classList.remove('alert');
+  }
+
+  updatePower();
+  setInterval(updatePower, 5000);
+</script>
+{% endblock %}
