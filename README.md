@@ -1,5 +1,2 @@
 # This is a repository for my home laboratory, showcasing everything I have done to it. 
-## This project is designed to show what is possible when curiosity meets practical engineering. 
-## Whether you are exploring home servers, cybersecurity, monitoring, networking, or automation, Andromeda can serve as a foundation for learning and experimentation.
-## Anyone can build, break, fix, redesign, and improve systems like this—no advanced background required.
-## Start small, stay curious, and let each experiment lead you to the next idea.
+## This project is designed to show what is possible when curiosity meets practical engineering. Whether you are exploring home servers, cybersecurity, monitoring, networking, or automation, Andromeda can serve as a foundation for learning and experimentation. Anyone can build, break, fix, redesign, and improve systems like this—no advanced background required. Start small, stay curious, and let each experiment lead you to the next idea.
