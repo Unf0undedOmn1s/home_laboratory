@@ -8,7 +8,7 @@ Andromeda functions as a secure edge node providing DNS filtering, network monit
 | Pi-hole | DNS-based ad and tracker blocking | 80 |
 | Prometheus | Metrics collection and scraping | 9090 |
 | Grafana | Data visualization and dashboarding | 3000 |
-| Flask Dashboard | Custom web interface for file and system management | 8000 |
+| Flask Dashboard | Custom web interface for file and system management | 5000 |
 | Tailscale | Secure private network connectivity | - |
 
 ## Network Access
@@ -84,3 +84,4 @@ sudo systemctl restart grafana-server
 - Integrate Telegram alerts for key events.
 - Export metrics to Orion for centralized analytics.
 - Add backup sync through Tailscale or rsync.
+
