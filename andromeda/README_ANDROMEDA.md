@@ -18,7 +18,7 @@ Access to Andromeda services is available through both the local network and the
   - Pi-hole: `http://<ip_address>/admin`
   - Prometheus: `http://ip_address:9090`
   - Grafana: `http://ip_address:3000`
-  - Flask Dashboard: `http://ip_address:8000`
+  - Flask Dashboard: `http://ip_address:5000`
 
 - Remote access via Tailscale:
   - Example: `http://andromeda.tailnet-name.ts.net:3000`
@@ -84,4 +84,3 @@ sudo systemctl restart grafana-server
 - Integrate Telegram alerts for key events.
 - Export metrics to Orion for centralized analytics.
 - Add backup sync through Tailscale or rsync.
-
