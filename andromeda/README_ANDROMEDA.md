@@ -52,7 +52,7 @@ A Python Flask-based web application provides a management layer for Andromeda.
 
 Features:
 - File upload and download
-- Real-time power monitoring using `powerstat`
+- Real-time power monitoring using `psutil`
 - System statistics API endpoints
 - User authentication
 
@@ -84,3 +84,4 @@ sudo systemctl restart grafana-server
 - Integrate Telegram alerts for key events.
 - Export metrics to Orion for centralized analytics.
 - Add backup sync through Tailscale or rsync.
+
