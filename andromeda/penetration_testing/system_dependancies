@@ -1,0 +1,26 @@
+#!/bin/bash
+# System packages needed for some Python modules
+
+sudo apt update
+sudo apt install -y \
+    nmap \
+    nikto \
+    hydra \
+    john \
+    aircrack-ng \
+    tshark \
+    tcpdump \
+    libpcap-dev \
+    build-essential \
+    python3-dev \
+    libffi-dev \
+    libssl-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    zlib1g-dev \
+    libjpeg-dev \
+    libpng-dev
+
+# Clone Lynis from GitHub
+git clone https://github.com/CISOfy/lynis
+echo "Lynis installed in: $(pwd)/lynis"
