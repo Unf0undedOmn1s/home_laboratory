@@ -13,5 +13,5 @@ sudo dpkg-reconfigure -plow unattended-upgrades
 # 3. Quick file permission cleanup
 find /home/$(whoami) -type f -perm /o+w -exec chmod o-w {} + 2>/dev/null
 
-echo " Basic hygiene complete!"
+echo " Basic system hygiene complete. Exiting..."
 echo "Firewall: Enabled, Updates: Automated, Permissions: Cleaned"
