@@ -1,7 +1,7 @@
 #!/bin/bash
 TARGET="192.168.2.8"
 
-echo "=== COMPREHENSIVE REMOTE ASSESSMENT ==="
+echo "COMPREHENSIVE REMOTE ASSESSMENT"
 
 # 1. Network mapping
 echo "1. Network mapping..."
